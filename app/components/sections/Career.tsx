@@ -56,41 +56,41 @@ interface CareerProps {
 
 // --- MAIN COMPONENT ---
 
-const Career: React.FC<CareerProps> = ({ 
+const Career: React.FC<CareerProps> = ({
   history = [
     {
       id: 1,
-      role: "SENIOR_SYSTEM_ARCHITECT",
-      company: "CYBERDYNE_SYSTEMS",
-      period: "2023 - PRESENT",
-      description: "Leading the development of neural net infrastructures and automated defense grids. Optimized core rendering engines by 400%.",
-      tech: ["React", "Node.js", "WebGL", "Rust"],
-      type: "full-time"
+      role: "Freelance Video Editor",
+      company: "Independent",
+      period: "2018 - Present",
+      description: "Produce and edit promotional videos, short-form content and motion graphics. Tasks include storytelling edits, color grading, audio cleanup, and export optimization for web and social platforms.",
+      tech: ["Premiere Pro", "After Effects", "DaVinci Resolve"],
+      type: "freelance"
     },
     {
       id: 2,
-      role: "FULL_STACK_OPERATIVE",
-      company: "NEXUS_SOLUTIONS",
-      period: "2021 - 2023",
-      description: "Deployed secure payment gateways for underground data markets. Managed distributed teams across three time zones.",
-      tech: ["TypeScript", "AWS", "Docker", "PostgreSQL"],
-      type: "contract"
+      role: "BSc Computer Science — Undergraduate (3rd Year)",
+      company: "University of Westminster",
+      period: "2022 - Present",
+      description: "Third-year Computer Science student focusing on software engineering, data structures, algorithms, databases and web development. Currently combining studies with an industry internship to gain practical full-stack experience.",
+      tech: ["JavaScript", "TypeScript", "Python", "Data Structures", "Algorithms"],
+      type: "full-time"
     },
     {
       id: 3,
-      role: "JUNIOR_ENFORCER",
-      company: "TYRELL_CORP",
-      period: "2019 - 2021",
-      description: "Maintained legacy replicant databases. Implemented first-generation AI chat interfaces for client support.",
-      tech: ["JavaScript", "Python", "SQL"],
-      type: "full-time"
+      role: "Software Full Stack Intern",
+      company: "Management System Pvt Ltd (MSL)",
+      period: "2025 - Present",
+      description: "Working as a full-stack intern building features for the company's management platform. Responsibilities include implementing React/Next.js frontends, Node.js backends, writing unit/integration tests, and participating in code reviews and CI/CD workflows.",
+      tech: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL", "Docker"],
+      type: "contract"
     }
   ]
 }) => {
   const [hoveredNode, setHoveredNode] = useState<number | null>(null);
 
   return (
-    <section id="career" className="py-24 bg-[#050505] relative overflow-hidden min-h-screen">
+    <section id="career" className="py-24 bg-black relative overflow-hidden min-h-screen">
       
       {/* Background Matrix Rain Effect (Static CSS representation) */}
       <div className="absolute inset-0 opacity-10 pointer-events-none career-matrix-bg"></div>
@@ -101,11 +101,14 @@ const Career: React.FC<CareerProps> = ({
         <CyberReveal>
           <div className="mb-16 border-b border-gray-800 pb-8">
             <h2 className="text-5xl font-cyber font-bold text-white mb-4 tracking-tighter">
-              CAREER <span className="text-yellow-400">TREE</span>
+              CAREER
             </h2>
-            <div className="flex items-center gap-2 text-yellow-600 font-mono text-sm">
-              <Terminal size={14} />
-              <span>&gt; ACCESSING_EMPLOYMENT_RECORDS...</span>
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div className="flex items-center gap-2 text-yellow-600 font-mono text-sm">
+                <Terminal size={14} />
+                <span>&gt; PROFESSIONAL EXPERIENCE & EDUCATION</span>
+              </div>
+              <div className="text-gray-400 text-sm font-mono">Updated from resume (draft) — edit entries as needed</div>
             </div>
           </div>
         </CyberReveal>
@@ -114,7 +117,7 @@ const Career: React.FC<CareerProps> = ({
         <div className="relative">
           
           {/* Main Circuit Line (The Tree Trunk) */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-gray-800 transform -translate-x-1/2 hidden md:block">
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 md:bottom-32 w-1 bg-gray-800 transform -translate-x-1/2 hidden md:block">
             <div className="absolute inset-0 bg-yellow-400/20 blur-sm"></div>
             <div className="absolute top-0 w-full h-1/3 bg-gradient-to-b from-yellow-400 to-transparent opacity-50"></div>
           </div>
@@ -221,7 +224,7 @@ const Career: React.FC<CareerProps> = ({
           </div>
 
           {/* Bottom Terminal Decoration */}
-          <div className="mt-16 flex justify-center">
+          <div className="mt-32 flex justify-center">
             <div className="bg-black border border-gray-800 p-4 rounded text-center">
               <div className="text-gray-500 text-xs font-mono mb-2">SYSTEM STATUS</div>
               <div className="flex gap-2">

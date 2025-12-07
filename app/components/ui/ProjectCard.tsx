@@ -49,11 +49,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick, index }) =>
           {customizedProject.tech}
         </div>
       </div>
-      <div className="p-4 relative z-20 bg-black">
-        <h3 className="text-xl font-bold text-fuchsia-100 font-mono mb-2 group-hover:text-fuchsia-400 transition-colors flex items-center gap-2">
-          {customizedProject.title}
-        </h3>
-        <p className="text-sm text-gray-400 font-mono line-clamp-2">{customizedProject.desc}</p>
+      <div className="p-4 relative z-20 bg-black min-h-[180px] flex flex-col justify-between">
+        <div>
+          <h3 className="text-xl font-bold text-fuchsia-100 font-mono mb-2 group-hover:text-fuchsia-400 transition-colors flex items-center gap-2">
+            {customizedProject.title}
+          </h3>
+          <p className="text-sm text-gray-400 font-mono line-clamp-3">{customizedProject.desc}</p>
+        </div>
         <div className="mt-4 flex items-center text-xs text-fuchsia-500 font-mono gap-1 overflow-hidden">
           <span className="transform translate-x-0 group-hover:translate-x-full transition-transform duration-500">INITIALIZE_VIEW</span>
           <span className="absolute transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 text-white">ACCESS_DATA...</span>

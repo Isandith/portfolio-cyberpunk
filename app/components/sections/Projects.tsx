@@ -94,10 +94,18 @@ const Projects: React.FC<ProjectsProps> = ({ selectedProject, onSelectProject })
             </div>
             
             <div className="p-8 grid md:grid-cols-2 gap-8">
-              {/* Fake Image View */}
+              {/* Project Image View */}
               <div className="aspect-video bg-gray-900 border border-gray-700 flex items-center justify-center relative group overflow-hidden">
                  <div className="absolute inset-0 bg-fuchsia-500/10 group-hover:bg-transparent transition-colors"></div>
-                 <div className="text-gray-700 w-16 h-16 group-hover:text-fuchsia-400 transition-colors">📊</div>
+                 {selectedProject.image ? (
+                   <img 
+                     src={selectedProject.image} 
+                     alt={selectedProject.title}
+                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                   />
+                 ) : (
+                   <div className="text-gray-700 w-16 h-16 group-hover:text-fuchsia-400 transition-colors">📊</div>
+                 )}
                  {/* Corner markers */}
                  <div className="absolute top-2 left-2 w-2 h-2 bg-fuchsia-500"></div>
                  <div className="absolute bottom-2 right-2 w-2 h-2 bg-fuchsia-500"></div>

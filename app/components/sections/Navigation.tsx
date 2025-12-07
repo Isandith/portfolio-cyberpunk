@@ -18,7 +18,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection, onNavigate }) =>
         </div>
         
         <div className="hidden md:flex gap-8 font-mono text-sm tracking-wider">
-          {['Home', 'Skills', 'Projects', 'Freelance', 'Contact'].map((item, idx) => (
+          {['Home', 'Skills', 'Projects', 'Career', 'Freelance', 'Contact'].map((item, idx) => (
             <button 
               key={item}
               onClick={() => onNavigate(item.toLowerCase())}
