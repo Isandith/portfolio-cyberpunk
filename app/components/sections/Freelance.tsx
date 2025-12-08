@@ -303,7 +303,12 @@ const Freelance: React.FC = () => {
     "/Reviews/1.png",
     "/Reviews/2.png",
     "/Reviews/3.png",
-    "/Reviews/4.png"
+    "/Reviews/4.png",
+    "/Reviews/5.png",
+    "/Reviews/6.png",
+    "/Reviews/7.png",
+    "/Reviews/8.png",
+
   ];
   
   const [activeProject, setActiveProject] = useState(0);
