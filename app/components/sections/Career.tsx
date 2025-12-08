@@ -1,5 +1,122 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Briefcase, Calendar, Terminal, Shield, Cpu, ChevronRight } from 'lucide-react';
+import CyberProcess from '../utils/CyberProcess';
+
+// --- CAREER-THEMED CYBERPUNK BACKGROUND COMPONENTS ---
+
+const CareerTimeline = () => {
+  const lines = Array.from({ length: 5 }, (_, i) => ({
+    top: `${20 + i * 15}%`,
+    delay: i * 0.5,
+    duration: 3 + i * 0.5
+  }));
+
+  return (
+    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+      {lines.map((line, i) => (
+        <div
+          key={i}
+          className="absolute left-0 h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent"
+          style={{
+            top: line.top,
+            animation: `timeline-sweep ${line.duration}s ease-in-out infinite`,
+            animationDelay: `${line.delay}s`
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+const SkillParticles = () => {
+  const [particles, setParticles] = React.useState<Array<{ left: string; top: string; delay: number; duration: number }>>([]);
+
+  React.useEffect(() => {
+    const newParticles = Array.from({ length: 8 }, (_, i) => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      delay: Math.random() * 3,
+      duration: 4 + Math.random() * 2
+    }));
+    setParticles(newParticles);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+      {particles.map((particle, i) => (
+        <div
+          key={i}
+          className="absolute w-2 h-2 bg-cyan-500/40 rounded-full blur-sm"
+          style={{
+            left: particle.left,
+            top: particle.top,
+            animation: `float-skill ${particle.duration}s ease-in-out infinite`,
+            animationDelay: `${particle.delay}s`
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+const ExperienceNodes = () => (
+  <div className="absolute inset-0 pointer-events-none z-0 opacity-20">
+    {/* Node circles representing career milestones */}
+    <div className="absolute top-1/4 left-1/4 w-16 h-16 border-2 border-cyan-500/30 rounded-full animate-[pulse-node_3s_ease-in-out_infinite]"></div>
+    <div className="absolute top-1/3 right-1/5 w-12 h-12 border-2 border-fuchsia-500/30 rounded-full animate-[pulse-node_4s_ease-in-out_infinite_reverse]"></div>
+    <div className="absolute bottom-1/4 left-1/3 w-20 h-20 border-2 border-cyan-500/20 rounded-full animate-[pulse-node_3.5s_ease-in-out_infinite]"></div>
+  </div>
+);
+
+const ConnectionLines = () => (
+  <div className="absolute inset-0 pointer-events-none z-0 opacity-10">
+    {/* SVG lines connecting nodes */}
+    <svg className="absolute inset-0 w-full h-full">
+      <line x1="25%" y1="25%" x2="80%" y2="33%" stroke="#06b6d4" strokeWidth="1" className="animate-[dash_8s_linear_infinite]" />
+      <line x1="80%" y1="33%" x2="33%" y2="75%" stroke="#d946ef" strokeWidth="1" className="animate-[dash_10s_linear_infinite]" />
+      <circle cx="25%" cy="25%" r="4" fill="#06b6d4" opacity="0.5" />
+      <circle cx="80%" cy="33%" r="4" fill="#d946ef" opacity="0.5" />
+      <circle cx="33%" cy="75%" r="4" fill="#06b6d4" opacity="0.5" />
+    </svg>
+  </div>
+);
+
+const CareerGlow = () => (
+  <>
+    <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[100px] animate-[pulse-glow_4s_ease-in-out_infinite]"></div>
+    <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-fuchsia-500/5 rounded-full blur-[120px] animate-[pulse-glow_5s_ease-in-out_infinite_reverse]"></div>
+  </>
+);
+
+const SystemStatus = () => {
+  const statuses = [
+    { label: "Career Status", value: "ACTIVE", color: "text-green-500", blinkIndex: 0 },
+    { label: "Current Role", value: "FULL_STACK_INTERN", color: "text-cyan-500", blinkIndex: 1 },
+    { label: "Experience Level", value: "MID", color: "text-yellow-500", blinkIndex: 2 },
+  ];
+
+  return (
+    <div className="absolute top-20 right-4 md:right-10 w-64 md:w-80 overflow-hidden opacity-30 pointer-events-none font-mono text-xs z-0">
+      <div className="border border-cyan-500/20 bg-cyan-950/10 p-3 space-y-2">
+        <div className="text-cyan-500/60 text-[10px] tracking-widest">SYSTEM STATUS</div>
+        {statuses.map((status, i) => (
+          <div key={i} className="flex justify-between items-center text-[10px]">
+            <span className="text-gray-400">{status.label}</span>
+            <div className="flex items-center gap-2">
+              <div 
+                className="w-2 h-2 rounded-full bg-green-500"
+                style={{
+                  animation: `status-blink-${status.blinkIndex} ${3 + status.blinkIndex * 2}s ease-in-out infinite`
+                }}
+              />
+              <span className={`${status.color} animate-pulse`}>{status.value}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 // --- UTILITY COMPONENTS (Included for standalone functionality) ---
 
@@ -92,8 +209,135 @@ const Career: React.FC<CareerProps> = ({
   return (
     <section id="career" className="py-24 bg-black relative overflow-hidden min-h-screen">
       
-      {/* Background Matrix Rain Effect (Static CSS representation) */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none career-matrix-bg"></div>
+      {/* --- BACKGROUND ANIMATIONS & STYLES --- */}
+      <style>{`
+        @keyframes timeline-sweep {
+          0% { transform: translateX(-100%); opacity: 0; }
+          50% { opacity: 1; }
+          100% { transform: translateX(100%); opacity: 0; }
+        }
+        @keyframes float-skill {
+          0%, 100% { transform: translate(0, 0); opacity: 0.2; }
+          50% { transform: translate(30px, -30px); opacity: 0.6; }
+        }
+        @keyframes pulse-node {
+          0%, 100% { 
+            transform: scale(1);
+            opacity: 0.3;
+          }
+          50% { 
+            transform: scale(1.3);
+            opacity: 0.6;
+          }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+        @keyframes dash {
+          0% { stroke-dashoffset: 500; }
+          100% { stroke-dashoffset: 0; }
+        }
+        @keyframes node-activate-0 {
+          0% { opacity: 0.6; box-shadow: none; }
+          30% { opacity: 1; box-shadow: 0 0 15px rgba(250,204,21,0.8); }
+          40% { opacity: 0.6; box-shadow: none; }
+          100% { opacity: 0.6; box-shadow: none; }
+        }
+        @keyframes node-activate-1 {
+          0% { opacity: 0.6; box-shadow: none; }
+          63% { opacity: 1; box-shadow: 0 0 15px rgba(250,204,21,0.8); }
+          73% { opacity: 0.6; box-shadow: none; }
+          100% { opacity: 0.6; box-shadow: none; }
+        }
+        @keyframes node-activate-2 {
+          0% { opacity: 0.6; box-shadow: none; }
+          96% { opacity: 1; box-shadow: 0 0 15px rgba(250,204,21,0.8); }
+          100% { opacity: 1; box-shadow: 0 0 15px rgba(250,204,21,0.8); }
+        }
+        @keyframes status-blink-0 {
+          0% { opacity: 0.3; }
+          10% { opacity: 1; }
+          20% { opacity: 0.3; }
+          100% { opacity: 0.3; }
+        }
+        @keyframes status-blink-1 {
+          0% { opacity: 0.3; }
+          40% { opacity: 0.3; }
+          50% { opacity: 1; }
+          60% { opacity: 0.3; }
+          100% { opacity: 0.3; }
+        }
+        @keyframes status-blink-2 {
+          0% { opacity: 0.3; }
+          70% { opacity: 0.3; }
+          80% { opacity: 1; }
+          90% { opacity: 0.3; }
+          100% { opacity: 0.3; }
+        }
+        @keyframes lightsaber-sweep {
+          0% { top: 0%; opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { top: 100%; opacity: 0; }
+        }
+        svg line { stroke-dasharray: 500; }
+        @keyframes section-glitch {
+          0% {
+            clip-path: inset(10% 0 85% 0);
+            transform: translate(-4px, 2px);
+            opacity: 0.3;
+          }
+          20% {
+            clip-path: inset(60% 0 20% 0);
+            transform: translate(4px, -2px);
+            opacity: 0.6;
+          }
+          40% {
+            clip-path: inset(30% 0 40% 0);
+            transform: translate(-2px, 4px);
+            opacity: 0.8;
+          }
+          60% {
+            clip-path: inset(5% 0 5% 0);
+            transform: translate(2px, -1px);
+            opacity: 0.95;
+          }
+          80% {
+            clip-path: inset(0 0 0 0);
+            transform: translate(-1px, 1px);
+            opacity: 1;
+          }
+          100% {
+            clip-path: inset(0 0 0 0);
+            transform: translate(0, 0);
+            opacity: 1;
+          }
+        }
+        .glitch-section {
+          animation: section-glitch 0.8s ease-out forwards;
+        }
+      `}</style>
+
+      {/* --- CAREER-THEMED CYBERPUNK BACKGROUND LAYERS --- */}
+      
+      {/* 1. Career Timeline Lines */}
+      <CareerTimeline />
+
+      {/* 2. Skill Particles */}
+      <SkillParticles />
+
+      {/* 3. Experience Nodes */}
+      <ExperienceNodes />
+
+      {/* 4. Connection Lines between nodes */}
+      <ConnectionLines />
+
+      {/* 5. Glowing Accents */}
+      <CareerGlow />
+
+      {/* 6. System Status Panel */}
+      <SystemStatus />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         
@@ -116,21 +360,28 @@ const Career: React.FC<CareerProps> = ({
         {/* Tree Container */}
         <div className="relative">
           
-          {/* Main Circuit Line (The Tree Trunk) */}
+          {/* Main Circuit Line (The Tree Trunk) - Desktop */}
           <div className="absolute left-4 md:left-1/2 top-0 bottom-0 md:bottom-32 w-1 bg-gray-800 transform -translate-x-1/2 hidden md:block">
             <div className="absolute inset-0 bg-yellow-400/20 blur-sm"></div>
             <div className="absolute top-0 w-full h-1/3 bg-gradient-to-b from-yellow-400 to-transparent opacity-50"></div>
+            {/* Yellow lightsaber sweep animation through the trunk */}
+            <div className="absolute top-0 left-0 w-full h-8 bg-gradient-to-b from-yellow-300 via-yellow-400 to-transparent opacity-70 animate-[lightsaber-sweep_9s_ease-in-out_infinite]" style={{ boxShadow: '0 0 20px rgba(250,204,21,0.8)' }}></div>
           </div>
           
-          {/* Mobile Line */}
-          <div className="absolute left-4 top-0 bottom-0 w-1 bg-gray-800 md:hidden"></div>
+          {/* Mobile Line with Yellow Effects */}
+          <div className="absolute left-4 top-0 bottom-0 w-1 bg-gray-800 md:hidden">
+            <div className="absolute inset-0 bg-yellow-400/20 blur-sm"></div>
+            <div className="absolute top-0 w-full h-1/3 bg-gradient-to-b from-yellow-400 to-transparent opacity-50"></div>
+            {/* Yellow lightsaber sweep animation - Mobile */}
+            <div className="absolute top-0 left-0 w-full h-6 bg-gradient-to-b from-yellow-300 via-yellow-400 to-transparent opacity-70 animate-[lightsaber-sweep_9s_ease-in-out_infinite]" style={{ boxShadow: '0 0 15px rgba(250,204,21,0.8)' }}></div>
+          </div>
 
           <div className="space-y-12">
             {history.map((job, index) => {
               const isRight = index % 2 === 0;
               
               return (
-                <CyberReveal key={job.id} delay={index * 150} className="relative">
+                <CyberProcess key={job.id} delay={index * 150} className="relative">
                   <div className={`md:flex items-center justify-between ${isRight ? 'flex-row' : 'flex-row-reverse'}`}>
                     
                     {/* Empty half for layout balance */}
@@ -142,10 +393,16 @@ const Career: React.FC<CareerProps> = ({
                         hoveredNode === job.id 
                           ? 'border-yellow-400 shadow-[0_0_15px_rgba(250,204,21,0.6)] scale-110' 
                           : 'border-gray-600'
-                      }`}>
+                      }`}
+                      style={{
+                        animation: `node-activate-${index} 9s ease-in-out infinite`
+                      }}>
                         <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${
-                          hoveredNode === job.id ? 'bg-yellow-400' : 'bg-gray-600'
-                        }`} />
+                          hoveredNode === job.id ? 'bg-yellow-400' : 'bg-yellow-500'
+                        }`} style={{
+                          animation: hoveredNode === job.id ? 'none' : `node-activate-${index} 9s ease-in-out infinite`,
+                          boxShadow: hoveredNode !== job.id ? '0 0 8px rgba(250,204,21,0.6)' : 'none'
+                        }} />
                       </div>
                     </div>
 
@@ -218,7 +475,7 @@ const Career: React.FC<CareerProps> = ({
                     </div>
 
                   </div>
-                </CyberReveal>
+                </CyberProcess>
               );
             })}
           </div>
@@ -242,19 +499,3 @@ const Career: React.FC<CareerProps> = ({
 };
 
 export default Career;
-
-// Inject CSS for career matrix background to avoid inline styles
-if (typeof window !== 'undefined') {
-  const styleId = 'career-matrix-style';
-  if (!document.getElementById(styleId)) {
-    const style = document.createElement('style');
-    style.id = styleId;
-    style.innerHTML = `
-      .career-matrix-bg {
-        background-image: linear-gradient(0deg, transparent 24%, rgba(32, 255, 77, .1) 25%, rgba(32, 255, 77, .1) 26%, transparent 27%, transparent 74%, rgba(32, 255, 77, .1) 75%, rgba(32, 255, 77, .1) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(32, 255, 77, .1) 25%, rgba(32, 255, 77, .1) 26%, transparent 27%, transparent 74%, rgba(32, 255, 77, .1) 75%, rgba(32, 255, 77, .1) 76%, transparent 77%, transparent);
-        background-size: 50px 50px;
-      }
-    `;
-    document.head.appendChild(style);
-  }
-}

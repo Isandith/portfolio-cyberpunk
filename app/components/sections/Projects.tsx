@@ -1,6 +1,127 @@
 import React, { useState, useEffect } from 'react';
 import CyberReveal from '../utils/CyberReveal';
+import CyberProcess from '../utils/CyberProcess';
 import ProjectCard from '../ui/ProjectCard';
+
+// --- HACKING/CYBERWARE THEMED BACKGROUND COMPONENTS ---
+
+const BinaryRain = ({ speed, delay, left }: { speed: number; delay: number; left: string }) => {
+  const [chars, setChars] = useState<string[]>([]);
+  
+  useEffect(() => {
+    const generate = () => Array.from({ length: 25 }, () => Math.random() > 0.5 ? '1' : '0');
+    setChars(generate());
+    const interval = setInterval(() => setChars(generate()), 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div 
+      className="absolute top-0 text-[12px] font-mono leading-tight text-fuchsia-500/30 select-none animate-hack-rain"
+      style={{ 
+        left, 
+        animationDuration: `${speed}s`, 
+        animationDelay: `${delay}s`,
+        textShadow: '0 0 8px rgba(217,70,239,0.6)'
+      }}
+    >
+      {chars.map((char, i) => (
+        <div key={i} className="opacity-70">
+          {char}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const HackingTerminal = () => {
+  const commands = [
+    "> ssh root@target.sys",
+    "> BREACH_INITIATED...",
+    "> UPLOADING_MALWARE.exe",
+    "> BYPASSING_ICE_PROTOCOL",
+    "> ACCESS_GRANTED",
+    "> EXTRACTING_DATA...",
+    "> CYBERWARE_IMPLANT_ACTIVE",
+    "> NEURAL_LINK_ESTABLISHED",
+  ];
+
+  return (
+    <div className="absolute top-1/2 -translate-y-1/2 left-4 md:left-10 w-48 md:w-72 h-40 overflow-hidden opacity-25 pointer-events-none font-mono text-xs text-fuchsia-400/80 z-0">
+      <div className="flex flex-col gap-1 animate-[scroll-up_12s_linear_infinite]">
+        {[...commands, ...commands, ...commands].map((cmd, i) => (
+          <div key={i} className="whitespace-nowrap text-[10px] md:text-xs">
+            {cmd}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const CyberwareHUD = () => (
+  <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-20">
+    {/* Corner brackets - hacking interface style */}
+    <div className="absolute top-10 left-10 w-20 h-20 border-l-2 border-t-2 border-fuchsia-500/40"></div>
+    <div className="absolute top-10 right-10 w-20 h-20 border-r-2 border-t-2 border-fuchsia-500/40"></div>
+    <div className="absolute bottom-10 left-10 w-20 h-20 border-l-2 border-b-2 border-fuchsia-500/40"></div>
+    <div className="absolute bottom-10 right-10 w-20 h-20 border-r-2 border-b-2 border-fuchsia-500/40"></div>
+    
+    {/* Scanning lines */}
+    <div className="absolute top-1/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-fuchsia-500/40 to-transparent animate-[scan-line_6s_ease-in-out_infinite]"></div>
+    <div className="absolute top-3/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-fuchsia-500/40 to-transparent animate-[scan-line_8s_ease-in-out_infinite_reverse]"></div>
+  </div>
+);
+
+const DataPackets = () => {
+  const packets = [
+    { top: '15%', delay: 0, duration: 5 },
+    { top: '35%', delay: 1, duration: 6 },
+    { top: '55%', delay: 2, duration: 7 },
+    { top: '75%', delay: 1.5, duration: 5.5 },
+  ];
+
+  return (
+    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+      {packets.map((packet, i) => (
+        <div
+          key={i}
+          className="absolute w-8 h-2 bg-fuchsia-500/30 animate-[data-transfer_linear_infinite]"
+          style={{
+            top: packet.top,
+            left: '-50px',
+            animationDuration: `${packet.duration}s`,
+            animationDelay: `${packet.delay}s`,
+            boxShadow: '0 0 10px rgba(217,70,239,0.5)'
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+const GlitchOverlay = () => (
+  <div className="absolute inset-0 pointer-events-none z-[1] opacity-10">
+    <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(217,70,239,0.03)_2px,rgba(217,70,239,0.03)_4px)]"></div>
+  </div>
+);
+
+const PulsingCircuits = () => (
+  <div className="absolute inset-0 pointer-events-none z-0 opacity-15">
+    <div className="absolute top-1/4 left-1/4 w-32 h-32 border border-fuchsia-500/30 rounded-full animate-[pulse-ring_3s_ease-in-out_infinite]"></div>
+    <div className="absolute bottom-1/3 right-1/4 w-40 h-40 border border-fuchsia-500/20 rounded-full animate-[pulse-ring_4s_ease-in-out_infinite_reverse]"></div>
+    <div className="absolute top-1/2 right-1/3 w-24 h-24 border border-fuchsia-500/25 rounded-full animate-[pulse-ring_3.5s_ease-in-out_infinite]"></div>
+  </div>
+);
+
+const GlowingAccents = () => (
+  <>
+    <div className="absolute top-20 left-10 w-64 h-64 bg-fuchsia-500/5 rounded-full blur-[100px] animate-[pulse-glow_4s_ease-in-out_infinite]"></div>
+    <div className="absolute bottom-20 right-10 w-80 h-80 bg-fuchsia-500/5 rounded-full blur-[120px] animate-[pulse-glow_5s_ease-in-out_infinite_reverse]"></div>
+  </>
+);
+
+// --- MAIN PROJECTS COMPONENT ---
 
 interface Project {
   id: string | number;
@@ -36,8 +157,75 @@ const Projects: React.FC<ProjectsProps> = ({ selectedProject, onSelectProject })
 
   return (
     <>
-      <section id="projects" className="py-20 relative">
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="projects" className="py-20 relative bg-black overflow-hidden">
+        
+        {/* --- BACKGROUND ANIMATIONS & STYLES --- */}
+        <style>{`
+          @keyframes hack-rain {
+            0% { transform: translateY(-100%); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(100vh); opacity: 0; }
+          }
+          @keyframes scroll-up {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+          }
+          @keyframes scan-line {
+            0%, 100% { transform: translateX(-100%); opacity: 0; }
+            50% { transform: translateX(0); opacity: 1; }
+          }
+          @keyframes data-transfer {
+            0% { transform: translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(100vw); opacity: 0; }
+          }
+          @keyframes pulse-ring {
+            0%, 100% { 
+              transform: scale(1);
+              opacity: 0.3;
+            }
+            50% { 
+              transform: scale(1.2);
+              opacity: 0.6;
+            }
+          }
+          @keyframes pulse-glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+          }
+        `}</style>
+
+        {/* --- HACKING/CYBERWARE THEMED BACKGROUND LAYERS --- */}
+        
+        {/* 1. Binary Rain (Matrix-style with green theme) */}
+        <div className="hidden md:block absolute inset-0 z-0 overflow-hidden">
+          <BinaryRain speed={6} delay={0} left="8%" />
+          <BinaryRain speed={8} delay={1} left="20%" />
+          <BinaryRain speed={7} delay={2} left="35%" />
+          <BinaryRain speed={9} delay={0.5} left="50%" />
+          <BinaryRain speed={6.5} delay={1.5} left="65%" />
+          <BinaryRain speed={8.5} delay={3} left="80%" />
+          <BinaryRain speed={7.5} delay={2.5} left="92%" />
+        </div>
+
+        {/* 2. Hacking Terminal Commands */}
+        <HackingTerminal />
+
+        {/* 3. Cyberware HUD Elements */}
+        <CyberwareHUD />
+        {/* 5. Pulsing Circuit Rings */}
+        <PulsingCircuits />
+
+        {/* 6. Glowing Accents */}
+        <GlowingAccents />
+
+        {/* 7. Glitch Overlay */}
+        <GlitchOverlay />
+
+        {/* --- CONTENT --- */}
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <CyberReveal>
             <h2 className="text-4xl font-cyber font-bold text-white mb-2">
               WHAT I'VE <span className="text-fuchsia-500">BUILT</span>
@@ -52,20 +240,21 @@ const Projects: React.FC<ProjectsProps> = ({ selectedProject, onSelectProject })
               <div className="text-gray-500 font-mono">No projects found.</div>
             ) : (
               repos.map((repo, index) => (
-                <ProjectCard
-                  key={repo.id}
-                  project={{
-                    id: repo.id,
-                    title: repo.name,
-                    tech: repo.language || 'Unknown',
-                    desc: repo.description || 'No description provided.',
-                    details: `Stars: ${repo.stargazers_count} | Forks: ${repo.forks_count}`,
-                    image: undefined,
-                    url: repo.html_url
-                  }}
-                  onClick={onSelectProject}
-                  index={index}
-                />
+                <CyberProcess key={repo.id} delay={index * 100}>
+                  <ProjectCard
+                    project={{
+                      id: repo.id,
+                      title: repo.name,
+                      tech: repo.language || 'Unknown',
+                      desc: repo.description || 'No description provided.',
+                      details: `Stars: ${repo.stargazers_count} | Forks: ${repo.forks_count}`,
+                      image: undefined,
+                      url: repo.html_url
+                    }}
+                    onClick={onSelectProject}
+                    index={index}
+                  />
+                </CyberProcess>
               ))
             )}
           </div>

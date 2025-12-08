@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navigation from './components/sections/Navigation';
 import Hero from './components/sections/Hero';
 import Skills from './components/sections/Skills';
@@ -9,7 +9,6 @@ import Freelance from './components/sections/Freelance';
 import Career from './components/sections/Career';
 import Contact from './components/sections/Contact';
 import Footer from './components/sections/Footer';
-import BackgroundEffects from './components/ui/BackgroundEffects';
 import { Code, Layers, Database, PenTool } from 'lucide-react';
 
 // --- TYPES ---
@@ -96,10 +95,41 @@ export default function App() {
     if (element) element.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Detect active section on scroll
+  useEffect(() => {
+    const sections = ['home', 'skills', 'projects', 'career', 'freelance', 'contact'];
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50% 0px -50% 0px',
+      threshold: 0
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    sections.forEach((section) => {
+      const element = document.getElementById(section);
+      if (element) observer.observe(element);
+    });
+
+    return () => {
+      sections.forEach((section) => {
+        const element = document.getElementById(section);
+        if (element) observer.unobserve(element);
+      });
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#050505] text-gray-200 font-sans selection:bg-cyan-500/30 selection:text-cyan-200 overflow-x-hidden">
       
-      {/* --- CSS INJECTIONS FOR ANIMATIONS --- */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;700&family=Share+Tech+Mono&display=swap');
         
@@ -107,19 +137,6 @@ export default function App() {
         .font-cyber { font-family: 'Orbitron', sans-serif; }
         .font-mono { font-family: 'Share Tech Mono', monospace; }
         
-        /* CRT Scanline Effect */
-        .scanline {
-          width: 100%;
-          height: 100px;
-          z-index: 10;
-          background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(34, 211, 238, 0.03) 50%, rgba(0,0,0,0) 100%);
-          opacity: 0.1;
-          position: fixed;
-          bottom: 100%;
-          animation: scanline 10s linear infinite;
-          pointer-events: none;
-        }
-
         /* CyberReveal delay classes */
         .cyber-delay-0 { transition-delay: 0ms; }
         .cyber-delay-100 { transition-delay: 100ms; }
@@ -172,24 +189,6 @@ export default function App() {
           animation: modal-in 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
         }
 
-        /* Moving Grid Background */
-        .bg-grid-pattern {
-          background-image: linear-gradient(to right, #111 1px, transparent 1px),
-          linear-gradient(to bottom, #111 1px, transparent 1px);
-          background-size: 40px 40px;
-          animation: grid-move 20s linear infinite;
-        }
-        
-        @keyframes grid-move {
-          0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
-          100% { transform: perspective(500px) rotateX(60deg) translateY(40px); }
-        }
-
-        @keyframes scanline {
-          0% { bottom: 100%; }
-          100% { bottom: -100%; }
-        }
-
         .progress-fill { width: var(--review-progress, 0%); }
 
         /* Cyberpunk Neon Scrollbar */
@@ -239,9 +238,6 @@ export default function App() {
         }
       `}</style>
 
-      {/* --- BACKGROUND FX --- */}
-      <BackgroundEffects />
-
       {/* --- NAVIGATION --- */}
       <Navigation activeSection={activeSection} onNavigate={scrollTo} />
 
@@ -259,7 +255,7 @@ export default function App() {
       <Career />
 
       {/* --- FREELANCE SECTION --- */}
-      <Freelance reviews={REVIEWS} />
+      <Freelance />
 
       {/* --- CONTACT SECTION --- */}
       <Contact />

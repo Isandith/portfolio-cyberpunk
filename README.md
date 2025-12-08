@@ -1,36 +1,232 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎮 Cyberpunk Portfolio - IZEE_EDITZ
 
-## Getting Started
+A futuristic, cyberpunk-themed portfolio website showcasing video editing services with neon aesthetics, glitch effects, and interactive UI elements.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-16.0.7-black?style=for-the-badge&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?style=for-the-badge&logo=tailwind-css)
 
+## ✨ Features
+
+### 🎨 Cyberpunk UI/UX
+- **Neon aesthetics** with cyan/yellow color schemes
+- **Glitch text effects** with dynamic scrambling animations
+- **CRT/Scanline overlays** for retro-futuristic feel
+- **Animated backgrounds** with floating particles and neon beams
+- **Holographic borders** and interactive hover effects
+- **Fully responsive** design (mobile-first approach)
+
+### 📧 Contact Form
+- **Gmail API integration** with Nodemailer
+- Real-time form validation
+- Cyberpunk-styled success/error messages
+- Professional HTML email templates
+- **500 emails/day capacity** (Gmail free tier)
+
+### 🎬 Freelance Showcase
+- **Interactive image carousel** with 4 client reviews
+- Auto-cycling slideshow (5-second intervals)
+- **Tactical modal viewer** with glitch animations
+- Thumbnail navigation with mobile swipe support
+- Direct Fiverr profile integration
+
+### 🛠️ Tech Stack
+- **Hero Section** - Animated landing with CTA
+- **Skills Section** - Technology showcase
+- **Projects Section** - Portfolio highlights
+- **Career Section** - Professional timeline
+- **Contact Section** - Secure contact form
+- **Navigation** - Smooth scroll with active states
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ installed
+- Gmail account with App Password enabled
+- Git installed
+
+### Installation
+
+1. **Clone the repository**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Isandith/portfolio-cyberpunk.git
+cd portfolio-cyberpunk
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install dependencies**
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Set up environment variables**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file in the root directory:
 
-## Learn More
+```env
+# Gmail Configuration
+GMAIL_USER=your-email@gmail.com
+GMAIL_APP_PASSWORD=your_16_char_app_password
+```
 
-To learn more about Next.js, take a look at the following resources:
+**How to get Gmail App Password:**
+1. Go to [Google Account Settings](https://myaccount.google.com/)
+2. Security → 2-Step Verification (enable if not enabled)
+3. Search for "App Passwords"
+4. Generate a new app password for "Mail"
+5. Copy the 16-character password
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Run the development server**
+```bash
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Deploy on Vercel
+## 📁 Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+portfolio-cyberpunk/
+├── app/
+│   ├── components/
+│   │   ├── sections/          # Main page sections
+│   │   │   ├── Hero.tsx
+│   │   │   ├── Career.tsx
+│   │   │   ├── Contact.tsx
+│   │   │   ├── Freelance.tsx
+│   │   │   ├── Projects.tsx
+│   │   │   ├── Skills.tsx
+│   │   │   ├── Navigation.tsx
+│   │   │   └── Footer.tsx
+│   │   ├── ui/                # Reusable UI components
+│   │   └── utils/             # Utility components
+│   ├── api/
+│   │   └── send-email/
+│   │       └── route.ts       # Email API endpoint
+│   ├── config/
+│   │   └── projectConfig.ts   # Project configuration
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── public/
+│   └── Reviews/               # Client review images
+│       ├── 1.png
+│       ├── 2.png
+│       ├── 3.png
+│       └── 4.png
+├── .env.local                 # Environment variables (not in repo)
+├── .gitignore
+├── package.json
+├── tsconfig.json
+├── tailwind.config.ts
+└── README.md
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎯 Key Components
+
+### Contact Form (`Contact.tsx`)
+- Cyberpunk-styled input fields with animated borders
+- Real-time validation and loading states
+- Gmail API integration for email delivery
+- Success/error feedback with auto-dismiss
+
+### Freelance Showcase (`Freelance.tsx`)
+- Image carousel with glitch transitions
+- Modal viewer with metadata display
+- Mobile-optimized thumbnail navigation
+- Fiverr profile integration
+
+### Navigation (`Navigation.tsx`)
+- Smooth scroll behavior
+- Active section highlighting
+- Mobile-responsive hamburger menu
+
+## 🌐 Deployment
+
+### Deploy to Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Import project in [Vercel](https://vercel.com)
+3. Add environment variables in Vercel dashboard
+4. Deploy!
+
+### Environment Variables for Production
+Add these in your hosting platform:
+- `GMAIL_USER`
+- `GMAIL_APP_PASSWORD`
+
+## 📊 Email Limits
+
+- **Gmail Free:** 500 emails/day
+- **Google Workspace:** 2,000 emails/day
+
+Consider alternatives for high volume:
+- SendGrid (100/day free)
+- Mailgun (5,000 free for 3 months)
+- AWS SES (62,000/month free)
+
+## 🎨 Customization
+
+### Colors
+Edit `tailwind.config.ts` to change the color scheme:
+- Primary: Cyan (`#06b6d4`)
+- Secondary: Yellow (`#fbbf24`)
+- Accent: Fuchsia (`#d946ef`)
+
+### Content
+- **Profile Info:** Edit `Freelance.tsx` (lines 430-450)
+- **Fiverr Link:** Update in `Freelance.tsx` (line 468)
+- **Project Images:** Replace files in `public/Reviews/`
+- **Email Template:** Modify in `app/api/send-email/route.ts`
+
+## 🛡️ Security Recommendations
+
+- ✅ Environment variables are in `.gitignore`
+- ⚠️ Add rate limiting to prevent spam
+- ⚠️ Add reCAPTCHA for bot protection
+- ⚠️ Implement email validation on backend
+
+## 📝 Scripts
+
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm run start    # Start production server
+npm run lint     # Run ESLint
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 👤 Author
+
+**IZEE_EDITZ**
+- Fiverr: [@izee_editz](https://fiverr.com/izee_editz)
+- GitHub: [@Isandith](https://github.com/Isandith)
+
+## 🙏 Acknowledgments
+
+- Next.js for the amazing framework
+- Tailwind CSS for utility-first styling
+- Lucide React for cyberpunk icons
+- Nodemailer for email functionality
+
+---
+
+<div align="center">
+  <strong>🎮 SYSTEM ONLINE // TERMINAL READY 🎮</strong>
+  <br />
+  Made with ⚡ by IZEE_EDITZ
+</div>
