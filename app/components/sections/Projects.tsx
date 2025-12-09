@@ -155,6 +155,19 @@ const Projects: React.FC<ProjectsProps> = ({ selectedProject, onSelectProject })
       });
   }, []);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedProject]);
+
   return (
     <>
       <section id="projects" className="py-20 relative bg-black overflow-hidden">
@@ -263,65 +276,81 @@ const Projects: React.FC<ProjectsProps> = ({ selectedProject, onSelectProject })
 
       {/* --- PROJECT MODAL --- */}
       {selectedProject && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
-          <div className="relative w-full max-w-3xl bg-[#0a0a0f] border border-fuchsia-500 shadow-[0_0_30px_rgba(217,70,239,0.2)] animate-modal-in overflow-hidden">
-             {/* CRT Scan line for modal */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent h-[10px] w-full animate-[scanline_2s_linear_infinite] opacity-10 pointer-events-none"></div>
+        <>
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 z-[50] bg-black/90 backdrop-blur-md"
+            onClick={() => onSelectProject(null)}
+          />
+          
+          {/* Modal Container */}
+          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 pointer-events-none">
+            <div className="relative w-full max-w-3xl bg-[#0a0a0f] border border-fuchsia-500 shadow-[0_0_30px_rgba(217,70,239,0.2)] animate-modal-in overflow-hidden max-h-[90vh] flex flex-col pointer-events-auto">
+               {/* CRT Scan line for modal */}
+              <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent h-[10px] w-full animate-[scanline_2s_linear_infinite] opacity-10 pointer-events-none"></div>
 
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-fuchsia-500/30 bg-fuchsia-950/20">
-              <h3 className="font-cyber text-2xl text-white">
-                {selectedProject.title}
-              </h3>
-              <button 
-                onClick={() => onSelectProject(null)}
-                aria-label="Close project modal"
-                className="text-fuchsia-500 hover:text-white transition-colors hover:rotate-90 duration-300"
-              >
-                ✕
-              </button>
-            </div>
-            
-            <div className="p-8 grid md:grid-cols-2 gap-8">
-              {/* Project Image View */}
-              <div className="aspect-video bg-gray-900 border border-gray-700 flex items-center justify-center relative group overflow-hidden">
-                 <div className="absolute inset-0 bg-fuchsia-500/10 group-hover:bg-transparent transition-colors"></div>
-                 {selectedProject.image ? (
-                   <img 
-                     src={selectedProject.image} 
-                     alt={selectedProject.title}
-                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                   />
-                 ) : (
-                   <div className="text-gray-700 w-16 h-16 group-hover:text-fuchsia-400 transition-colors">📊</div>
-                 )}
-                 {/* Corner markers */}
-                 <div className="absolute top-2 left-2 w-2 h-2 bg-fuchsia-500"></div>
-                 <div className="absolute bottom-2 right-2 w-2 h-2 bg-fuchsia-500"></div>
+              {/* Header */}
+              <div className="flex items-center justify-between p-4 border-b border-fuchsia-500/30 bg-fuchsia-950/20 flex-shrink-0">
+                <h3 className="font-cyber text-2xl text-white">
+                  {selectedProject.title}
+                </h3>
+                <button 
+                  onClick={() => onSelectProject(null)}
+                  aria-label="Close project modal"
+                  className="text-fuchsia-500 hover:text-white transition-colors hover:rotate-90 duration-300 flex-shrink-0 text-2xl"
+                >
+                  ✕
+                </button>
               </div>
               
-              <div className="font-mono space-y-4">
-                 <div className="inline-block px-2 py-1 bg-fuchsia-900/30 text-fuchsia-400 text-xs border border-fuchsia-500/30">
-                   {selectedProject.tech}
-                 </div>
-                 
-                 <p className="text-gray-300 leading-relaxed">
-                   {selectedProject.desc}
-                 </p>
-                 
-                 <div className="border-l-2 border-fuchsia-500 pl-4 text-sm text-gray-400 italic">
-                   "{selectedProject.details}"
-                 </div>
+              {/* Content */}
+              <div className="p-8 grid md:grid-cols-2 gap-8 overflow-y-auto">
+                {/* Project Image View */}
+                <div className="aspect-video bg-gray-900 border border-gray-700 flex items-center justify-center relative group overflow-hidden flex-shrink-0">
+                   <div className="absolute inset-0 bg-fuchsia-500/10 group-hover:bg-transparent transition-colors"></div>
+                   {selectedProject.image ? (
+                     <img 
+                       src={selectedProject.image} 
+                       alt={selectedProject.title}
+                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                     />
+                   ) : (
+                     <div className="text-gray-700 w-16 h-16 group-hover:text-fuchsia-400 transition-colors">📊</div>
+                   )}
+                   {/* Corner markers */}
+                   <div className="absolute top-2 left-2 w-2 h-2 bg-fuchsia-500"></div>
+                   <div className="absolute bottom-2 right-2 w-2 h-2 bg-fuchsia-500"></div>
+                </div>
+                
+                <div className="font-mono space-y-4">
+                   <div className="inline-block px-2 py-1 bg-fuchsia-900/30 text-fuchsia-400 text-xs border border-fuchsia-500/30">
+                     {selectedProject.tech}
+                   </div>
+                   
+                   <p className="text-gray-300 leading-relaxed">
+                     {selectedProject.desc}
+                   </p>
+                   
+                   <div className="border-l-2 border-fuchsia-500 pl-4 text-sm text-gray-400 italic">
+                     "{selectedProject.details}"
+                   </div>
 
-                 <div className="pt-6">
-                    <a href={selectedProject.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-fuchsia-400 hover:text-white transition-colors uppercase text-sm font-bold tracking-wider group">
-                      🔗 Access Repository
-                    </a>
-                 </div>
+                   <div className="pt-6 flex flex-col gap-3">
+                      <a href={selectedProject.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-fuchsia-400 hover:text-white transition-colors uppercase text-sm font-bold tracking-wider group">
+                        🔗 Access Repository
+                      </a>
+                      <button
+                        onClick={() => onSelectProject(null)}
+                        className="flex items-center gap-2 text-fuchsia-400 hover:text-white transition-colors uppercase text-sm font-bold tracking-wider border border-fuchsia-400 px-4 py-2 hover:bg-fuchsia-500/10"
+                      >
+                        Close Modal
+                      </button>
+                   </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

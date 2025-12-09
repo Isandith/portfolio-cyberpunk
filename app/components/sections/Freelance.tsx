@@ -329,8 +329,13 @@ const Freelance: React.FC = () => {
     setTimeout(() => setIsGlitching(false), 400); // 400ms glitch duration
     
     if (typeof nextIndex === 'function') {
-        setActiveProject(nextIndex);
+        setActiveProject(prev => {
+            const next = nextIndex(prev);
+            // Loop: wrap around at boundaries
+            return next < 0 ? projects.length - 1 : next >= projects.length ? 0 : next;
+        });
     } else {
+        // Loop: wrap around at boundaries
         const next = nextIndex < 0 ? projects.length - 1 : nextIndex >= projects.length ? 0 : nextIndex;
         setActiveProject(next);
     }
