@@ -312,8 +312,8 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      label="IDENTITY"
-                      placeholder="ENTER_CODENAME" 
+                      label="MSG_HEADER"
+                      placeholder="SUBJECT_LINE_PROTOCOL" 
                       icon={User} 
                       color="cyan"
                     />
@@ -335,8 +335,8 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    label="DATA_PACKET"
-                    placeholder="ENTER_TRANSMISSION_DATA..." 
+                    label="MSG_BODY"
+                    placeholder="ENTER_TRANSMISSION_BODY_DATA..." 
                     type="textarea"
                     icon={Terminal} 
                     color="cyan"
