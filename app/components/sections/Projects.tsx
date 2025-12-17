@@ -18,12 +18,18 @@ interface GitHubRepo {
 
 const BinaryRain = ({ speed, delay, left }: { speed: number; delay: number; left: string }) => {
   const generate = () => Array.from({ length: 25 }, () => Math.random() > 0.5 ? '1' : '0');
-  const [chars, setChars] = useState<string[]>(generate);
+  const [chars, setChars] = useState<string[]>([]);
   
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setChars(generate());
+    
     const interval = setInterval(() => setChars(generate()), 100);
     return () => clearInterval(interval);
   }, []);
+
+  // Don't render until chars are populated on client
+  if (chars.length === 0) return null;
 
   return (
     <div 

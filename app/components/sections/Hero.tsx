@@ -119,12 +119,18 @@ const CyberGrid = () => (
 const HexColumn = ({ speed, delay, left }: { speed: number; delay: number; left: string }) => {
   const hex = "0123456789ABCDEF";
   const generateChars = () => Array.from({ length: 20 }, () => hex[Math.floor(Math.random() * hex.length)]);
-  const [chars, setChars] = useState<string[]>(generateChars);
+  const [chars, setChars] = useState<string[]>([]);
   
   useEffect(() => {
-    const interval = setInterval(() => setChars(generateChars()), 200); // Change chars constantly
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setChars(generateChars());
+    
+    const interval = setInterval(() => setChars(generateChars()), 200);
     return () => clearInterval(interval);
   }, []);
+
+  // Don't render anything until chars are populated on client
+  if (chars.length === 0) return null;
 
   return (
     <div 
