@@ -14,6 +14,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Create transporter using Gmail
+    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+      console.error('Missing GMAIL_USER or GMAIL_APP_PASSWORD environment variables');
+      return NextResponse.json(
+        { error: 'Email service not configured' },
+        { status: 500 }
+      );
+    }
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
