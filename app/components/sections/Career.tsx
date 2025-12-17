@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Briefcase, Calendar, Terminal, Shield, Cpu, ChevronRight } from 'lucide-react';
+import { Calendar, Terminal, Shield } from 'lucide-react';
 import CyberProcess from '../utils/CyberProcess';
 
 // --- CAREER-THEMED CYBERPUNK BACKGROUND COMPONENTS ---
@@ -16,11 +16,12 @@ const CareerTimeline = () => {
       {lines.map((line, i) => (
         <div
           key={i}
-          className="absolute left-0 h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent"
+          className="absolute left-0 h-[3px] w-full bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent"
           style={{
             top: line.top,
             animation: `timeline-sweep ${line.duration}s ease-in-out infinite`,
-            animationDelay: `${line.delay}s`
+            animationDelay: `${line.delay}s`,
+            boxShadow: '0 0 10px rgba(6,182,212,0.5)'
           }}
         />
       ))}
@@ -32,7 +33,7 @@ const SkillParticles = () => {
   const [particles, setParticles] = React.useState<Array<{ left: string; top: string; delay: number; duration: number }>>([]);
 
   React.useEffect(() => {
-    const newParticles = Array.from({ length: 8 }, (_, i) => ({
+    const newParticles = Array.from({ length: 8 }, () => ({
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
       delay: Math.random() * 3,
@@ -46,12 +47,13 @@ const SkillParticles = () => {
       {particles.map((particle, i) => (
         <div
           key={i}
-          className="absolute w-2 h-2 bg-cyan-500/40 rounded-full blur-sm"
+          className="absolute w-3 h-3 bg-cyan-400/60 rounded-full blur-sm"
           style={{
             left: particle.left,
             top: particle.top,
             animation: `float-skill ${particle.duration}s ease-in-out infinite`,
-            animationDelay: `${particle.delay}s`
+            animationDelay: `${particle.delay}s`,
+            boxShadow: '0 0 8px rgba(6,182,212,0.6)'
           }}
         />
       ))}
@@ -60,31 +62,31 @@ const SkillParticles = () => {
 };
 
 const ExperienceNodes = () => (
-  <div className="absolute inset-0 pointer-events-none z-0 opacity-20">
+  <div className="absolute inset-0 pointer-events-none z-0 opacity-30">
     {/* Node circles representing career milestones */}
-    <div className="absolute top-1/4 left-1/4 w-16 h-16 border-2 border-cyan-500/30 rounded-full animate-[pulse-node_3s_ease-in-out_infinite]"></div>
-    <div className="absolute top-1/3 right-1/5 w-12 h-12 border-2 border-fuchsia-500/30 rounded-full animate-[pulse-node_4s_ease-in-out_infinite_reverse]"></div>
-    <div className="absolute bottom-1/4 left-1/3 w-20 h-20 border-2 border-cyan-500/20 rounded-full animate-[pulse-node_3.5s_ease-in-out_infinite]"></div>
+    <div className="absolute top-1/4 left-1/4 w-16 h-16 border-2 border-cyan-400/50 rounded-full animate-[pulse-node_3s_ease-in-out_infinite]" style={{ boxShadow: '0 0 15px rgba(6,182,212,0.4)' }}></div>
+    <div className="absolute top-1/3 right-1/5 w-12 h-12 border-2 border-fuchsia-400/50 rounded-full animate-[pulse-node_4s_ease-in-out_infinite_reverse]" style={{ boxShadow: '0 0 15px rgba(217,70,239,0.4)' }}></div>
+    <div className="absolute bottom-1/4 left-1/3 w-20 h-20 border-2 border-cyan-400/40 rounded-full animate-[pulse-node_3.5s_ease-in-out_infinite]" style={{ boxShadow: '0 0 12px rgba(6,182,212,0.3)' }}></div>
   </div>
 );
 
 const ConnectionLines = () => (
-  <div className="absolute inset-0 pointer-events-none z-0 opacity-10">
+  <div className="absolute inset-0 pointer-events-none z-0 opacity-25">
     {/* SVG lines connecting nodes */}
     <svg className="absolute inset-0 w-full h-full">
-      <line x1="25%" y1="25%" x2="80%" y2="33%" stroke="#06b6d4" strokeWidth="1" className="animate-[dash_8s_linear_infinite]" />
-      <line x1="80%" y1="33%" x2="33%" y2="75%" stroke="#d946ef" strokeWidth="1" className="animate-[dash_10s_linear_infinite]" />
-      <circle cx="25%" cy="25%" r="4" fill="#06b6d4" opacity="0.5" />
-      <circle cx="80%" cy="33%" r="4" fill="#d946ef" opacity="0.5" />
-      <circle cx="33%" cy="75%" r="4" fill="#06b6d4" opacity="0.5" />
+      <line x1="25%" y1="25%" x2="80%" y2="33%" stroke="#22d3ee" strokeWidth="2" className="animate-[dash_8s_linear_infinite]" style={{ filter: 'drop-shadow(0 0 5px rgba(6,182,212,0.5))' }} />
+      <line x1="80%" y1="33%" x2="33%" y2="75%" stroke="#e879f9" strokeWidth="2" className="animate-[dash_10s_linear_infinite]" style={{ filter: 'drop-shadow(0 0 5px rgba(217,70,239,0.5))' }} />
+      <circle cx="25%" cy="25%" r="5" fill="#22d3ee" opacity="0.8" style={{ filter: 'drop-shadow(0 0 6px rgba(6,182,212,0.6))' }} />
+      <circle cx="80%" cy="33%" r="5" fill="#e879f9" opacity="0.8" style={{ filter: 'drop-shadow(0 0 6px rgba(217,70,239,0.6))' }} />
+      <circle cx="33%" cy="75%" r="5" fill="#22d3ee" opacity="0.8" style={{ filter: 'drop-shadow(0 0 6px rgba(6,182,212,0.6))' }} />
     </svg>
   </div>
 );
 
 const CareerGlow = () => (
   <>
-    <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[100px] animate-[pulse-glow_4s_ease-in-out_infinite]"></div>
-    <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-fuchsia-500/5 rounded-full blur-[120px] animate-[pulse-glow_5s_ease-in-out_infinite_reverse]"></div>
+    <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] animate-[pulse-glow_4s_ease-in-out_infinite]"></div>
+    <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-fuchsia-500/10 rounded-full blur-[120px] animate-[pulse-glow_5s_ease-in-out_infinite_reverse]"></div>
   </>
 );
 
@@ -96,9 +98,9 @@ const SystemStatus = () => {
   ];
 
   return (
-    <div className="absolute top-20 right-4 md:right-10 w-64 md:w-80 overflow-hidden opacity-30 pointer-events-none font-mono text-xs z-0">
-      <div className="border border-cyan-500/20 bg-cyan-950/10 p-3 space-y-2">
-        <div className="text-cyan-500/60 text-[10px] tracking-widest">SYSTEM STATUS</div>
+    <div className="absolute top-20 right-4 md:right-10 w-64 md:w-80 overflow-hidden opacity-40 pointer-events-none font-mono text-xs z-0">
+      <div className="border border-cyan-500/40 bg-cyan-950/20 p-3 space-y-2" style={{ boxShadow: '0 0 15px rgba(6,182,212,0.2)' }}>
+        <div className="text-cyan-400/80 text-[10px] tracking-widest">SYSTEM STATUS</div>
         {statuses.map((status, i) => (
           <div key={i} className="flex justify-between items-center text-[10px]">
             <span className="text-gray-400">{status.label}</span>

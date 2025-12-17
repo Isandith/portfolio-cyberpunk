@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { User } from 'lucide-react';
 import CyberReveal from '../utils/CyberReveal'; 
 import CyberProcess from '../utils/CyberProcess';
 import HologramCard from '../ui/HologramCard';
@@ -20,12 +19,13 @@ const FloatingGlitches = () => {
       {glitches.map((glitch, i) => (
         <div
           key={i}
-          className="absolute w-1 h-20 bg-gradient-to-b from-transparent via-cyan-500/50 to-transparent animate-[float-up_linear_infinite]"
+          className="absolute w-2 h-32 bg-gradient-to-b from-transparent via-cyan-400/50 to-transparent animate-[float-up_linear_infinite]"
           style={{
             left: glitch.left,
             bottom: '-100px',
             animationDuration: `${glitch.duration}s`,
             animationDelay: `${glitch.delay}s`,
+            boxShadow: '0 0 8px rgba(6,182,212,0.4), 0 0 15px rgba(6,182,212,0.2)',
           }}
         />
       ))}
@@ -45,11 +45,12 @@ const HorizontalScanLines = () => {
       {lines.map((line, i) => (
         <div
           key={i}
-          className="absolute h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent animate-[scan-horizontal_linear_infinite]"
+          className="absolute h-[3px] w-full bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent animate-[scan-horizontal_linear_infinite]"
           style={{
             top: line.top,
             animationDuration: `${line.speed}s`,
             animationDelay: `${line.delay}s`,
+            boxShadow: '0 0 10px rgba(6,182,212,0.5)',
           }}
         />
       ))}
@@ -58,17 +59,17 @@ const HorizontalScanLines = () => {
 };
 
 const PulsingCircuits = () => (
-  <div className="absolute inset-0 pointer-events-none z-0 opacity-20">
-    <div className="absolute top-1/4 left-1/4 w-32 h-32 border border-cyan-500/30 rounded-full animate-[pulse-ring_3s_ease-in-out_infinite]"></div>
-    <div className="absolute bottom-1/3 right-1/4 w-40 h-40 border border-fuchsia-500/20 rounded-full animate-[pulse-ring_4s_ease-in-out_infinite_reverse]"></div>
-    <div className="absolute top-1/2 right-1/3 w-24 h-24 border border-cyan-500/25 rounded-full animate-[pulse-ring_3.5s_ease-in-out_infinite]"></div>
+  <div className="absolute inset-0 pointer-events-none z-0 opacity-30">
+    <div className="absolute top-1/4 left-1/4 w-32 h-32 border-2 border-cyan-400/45 rounded-full animate-[pulse-ring_3s_ease-in-out_infinite]" style={{ boxShadow: '0 0 15px rgba(6,182,212,0.3)' }}></div>
+    <div className="absolute bottom-1/3 right-1/4 w-40 h-40 border-2 border-fuchsia-400/40 rounded-full animate-[pulse-ring_4s_ease-in-out_infinite_reverse]" style={{ boxShadow: '0 0 15px rgba(217,70,239,0.3)' }}></div>
+    <div className="absolute top-1/2 right-1/3 w-24 h-24 border-2 border-cyan-400/40 rounded-full animate-[pulse-ring_3.5s_ease-in-out_infinite]" style={{ boxShadow: '0 0 12px rgba(6,182,212,0.3)' }}></div>
   </div>
 );
 
 const GlowingAccents = () => (
   <>
-    <div className="absolute top-20 left-10 w-64 h-64 bg-cyan-500/5 rounded-full blur-[100px] animate-[pulse-glow_4s_ease-in-out_infinite]"></div>
-    <div className="absolute bottom-20 right-10 w-80 h-80 bg-fuchsia-500/5 rounded-full blur-[120px] animate-[pulse-glow_5s_ease-in-out_infinite_reverse]"></div>
+    <div className="absolute top-20 left-10 w-64 h-64 bg-cyan-500/10 rounded-full blur-[100px] animate-[pulse-glow_4s_ease-in-out_infinite]"></div>
+    <div className="absolute bottom-20 right-10 w-80 h-80 bg-fuchsia-500/10 rounded-full blur-[120px] animate-[pulse-glow_5s_ease-in-out_infinite_reverse]"></div>
   </>
 );
 

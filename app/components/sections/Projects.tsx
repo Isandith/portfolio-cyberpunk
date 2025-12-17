@@ -1,32 +1,42 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import CyberReveal from '../utils/CyberReveal';
 import CyberProcess from '../utils/CyberProcess';
 import ProjectCard from '../ui/ProjectCard';
 
+interface GitHubRepo {
+  id: number;
+  name: string;
+  description: string | null;
+  language: string | null;
+  stargazers_count: number;
+  forks_count: number;
+  html_url: string;
+}
+
 // --- HACKING/CYBERWARE THEMED BACKGROUND COMPONENTS ---
 
 const BinaryRain = ({ speed, delay, left }: { speed: number; delay: number; left: string }) => {
-  const [chars, setChars] = useState<string[]>([]);
+  const generate = () => Array.from({ length: 25 }, () => Math.random() > 0.5 ? '1' : '0');
+  const [chars, setChars] = useState<string[]>(generate);
   
   useEffect(() => {
-    const generate = () => Array.from({ length: 25 }, () => Math.random() > 0.5 ? '1' : '0');
-    setChars(generate());
     const interval = setInterval(() => setChars(generate()), 100);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div 
-      className="absolute top-0 text-[12px] font-mono leading-tight text-fuchsia-500/30 select-none animate-hack-rain"
+      className="absolute top-0 text-[14px] font-mono leading-tight text-fuchsia-400/60 select-none animate-hack-rain"
       style={{ 
         left, 
         animationDuration: `${speed}s`, 
         animationDelay: `${delay}s`,
-        textShadow: '0 0 8px rgba(217,70,239,0.6)'
+        textShadow: '0 0 10px rgba(217,70,239,0.8), 0 0 15px rgba(217,70,239,0.5)'
       }}
     >
       {chars.map((char, i) => (
-        <div key={i} className="opacity-70">
+        <div key={i} className="opacity-85">
           {char}
         </div>
       ))}
@@ -47,7 +57,7 @@ const HackingTerminal = () => {
   ];
 
   return (
-    <div className="absolute top-1/2 -translate-y-1/2 left-4 md:left-10 w-48 md:w-72 h-40 overflow-hidden opacity-25 pointer-events-none font-mono text-xs text-fuchsia-400/80 z-0">
+    <div className="absolute top-1/2 -translate-y-1/2 left-4 md:left-10 w-48 md:w-72 h-40 overflow-hidden opacity-40 pointer-events-none font-mono text-xs text-fuchsia-400/90 z-0" style={{ textShadow: '0 0 8px rgba(217,70,239,0.6)' }}>
       <div className="flex flex-col gap-1 animate-[scroll-up_12s_linear_infinite]">
         {[...commands, ...commands, ...commands].map((cmd, i) => (
           <div key={i} className="whitespace-nowrap text-[10px] md:text-xs">
@@ -60,64 +70,37 @@ const HackingTerminal = () => {
 };
 
 const CyberwareHUD = () => (
-  <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-20">
+  <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-35">
     {/* Corner brackets - hacking interface style */}
-    <div className="absolute top-10 left-10 w-20 h-20 border-l-2 border-t-2 border-fuchsia-500/40"></div>
-    <div className="absolute top-10 right-10 w-20 h-20 border-r-2 border-t-2 border-fuchsia-500/40"></div>
-    <div className="absolute bottom-10 left-10 w-20 h-20 border-l-2 border-b-2 border-fuchsia-500/40"></div>
-    <div className="absolute bottom-10 right-10 w-20 h-20 border-r-2 border-b-2 border-fuchsia-500/40"></div>
+    <div className="absolute top-10 left-10 w-20 h-20 border-l-2 border-t-2 border-fuchsia-400/70" style={{ boxShadow: '0 0 10px rgba(217,70,239,0.4)' }}></div>
+    <div className="absolute top-10 right-10 w-20 h-20 border-r-2 border-t-2 border-fuchsia-400/70" style={{ boxShadow: '0 0 10px rgba(217,70,239,0.4)' }}></div>
+    <div className="absolute bottom-10 left-10 w-20 h-20 border-l-2 border-b-2 border-fuchsia-400/70" style={{ boxShadow: '0 0 10px rgba(217,70,239,0.4)' }}></div>
+    <div className="absolute bottom-10 right-10 w-20 h-20 border-r-2 border-b-2 border-fuchsia-400/70" style={{ boxShadow: '0 0 10px rgba(217,70,239,0.4)' }}></div>
     
     {/* Scanning lines */}
-    <div className="absolute top-1/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-fuchsia-500/40 to-transparent animate-[scan-line_6s_ease-in-out_infinite]"></div>
-    <div className="absolute top-3/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-fuchsia-500/40 to-transparent animate-[scan-line_8s_ease-in-out_infinite_reverse]"></div>
+    <div className="absolute top-1/4 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-fuchsia-400/60 to-transparent animate-[scan-line_6s_ease-in-out_infinite]" style={{ boxShadow: '0 0 12px rgba(217,70,239,0.6)' }}></div>
+    <div className="absolute top-3/4 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-fuchsia-400/60 to-transparent animate-[scan-line_8s_ease-in-out_infinite_reverse]" style={{ boxShadow: '0 0 12px rgba(217,70,239,0.6)' }}></div>
   </div>
 );
 
-const DataPackets = () => {
-  const packets = [
-    { top: '15%', delay: 0, duration: 5 },
-    { top: '35%', delay: 1, duration: 6 },
-    { top: '55%', delay: 2, duration: 7 },
-    { top: '75%', delay: 1.5, duration: 5.5 },
-  ];
-
-  return (
-    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-      {packets.map((packet, i) => (
-        <div
-          key={i}
-          className="absolute w-8 h-2 bg-fuchsia-500/30 animate-[data-transfer_linear_infinite]"
-          style={{
-            top: packet.top,
-            left: '-50px',
-            animationDuration: `${packet.duration}s`,
-            animationDelay: `${packet.delay}s`,
-            boxShadow: '0 0 10px rgba(217,70,239,0.5)'
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
 const GlitchOverlay = () => (
-  <div className="absolute inset-0 pointer-events-none z-[1] opacity-10">
-    <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(217,70,239,0.03)_2px,rgba(217,70,239,0.03)_4px)]"></div>
+  <div className="absolute inset-0 pointer-events-none z-[1] opacity-20">
+    <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(217,70,239,0.08)_2px,rgba(217,70,239,0.08)_4px)]"></div>
   </div>
 );
 
 const PulsingCircuits = () => (
-  <div className="absolute inset-0 pointer-events-none z-0 opacity-15">
-    <div className="absolute top-1/4 left-1/4 w-32 h-32 border border-fuchsia-500/30 rounded-full animate-[pulse-ring_3s_ease-in-out_infinite]"></div>
-    <div className="absolute bottom-1/3 right-1/4 w-40 h-40 border border-fuchsia-500/20 rounded-full animate-[pulse-ring_4s_ease-in-out_infinite_reverse]"></div>
-    <div className="absolute top-1/2 right-1/3 w-24 h-24 border border-fuchsia-500/25 rounded-full animate-[pulse-ring_3.5s_ease-in-out_infinite]"></div>
+  <div className="absolute inset-0 pointer-events-none z-0 opacity-30">
+    <div className="absolute top-1/4 left-1/4 w-32 h-32 border-2 border-fuchsia-400/50 rounded-full animate-[pulse-ring_3s_ease-in-out_infinite]" style={{ boxShadow: '0 0 15px rgba(217,70,239,0.4)' }}></div>
+    <div className="absolute bottom-1/3 right-1/4 w-40 h-40 border-2 border-fuchsia-400/40 rounded-full animate-[pulse-ring_4s_ease-in-out_infinite_reverse]" style={{ boxShadow: '0 0 15px rgba(217,70,239,0.3)' }}></div>
+    <div className="absolute top-1/2 right-1/3 w-24 h-24 border-2 border-fuchsia-400/45 rounded-full animate-[pulse-ring_3.5s_ease-in-out_infinite]" style={{ boxShadow: '0 0 12px rgba(217,70,239,0.3)' }}></div>
   </div>
 );
 
 const GlowingAccents = () => (
   <>
-    <div className="absolute top-20 left-10 w-64 h-64 bg-fuchsia-500/5 rounded-full blur-[100px] animate-[pulse-glow_4s_ease-in-out_infinite]"></div>
-    <div className="absolute bottom-20 right-10 w-80 h-80 bg-fuchsia-500/5 rounded-full blur-[120px] animate-[pulse-glow_5s_ease-in-out_infinite_reverse]"></div>
+    <div className="absolute top-20 left-10 w-64 h-64 bg-fuchsia-500/10 rounded-full blur-[100px] animate-[pulse-glow_4s_ease-in-out_infinite]"></div>
+    <div className="absolute bottom-20 right-10 w-80 h-80 bg-fuchsia-500/10 rounded-full blur-[120px] animate-[pulse-glow_5s_ease-in-out_infinite_reverse]"></div>
   </>
 );
 
@@ -139,7 +122,7 @@ interface ProjectsProps {
 }
 
 const Projects: React.FC<ProjectsProps> = ({ selectedProject, onSelectProject }) => {
-  const [repos, setRepos] = useState<any[]>([]);
+  const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -241,7 +224,7 @@ const Projects: React.FC<ProjectsProps> = ({ selectedProject, onSelectProject })
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <CyberReveal>
             <h2 className="text-4xl font-cyber font-bold text-white mb-2">
-              WHAT I'VE <span className="text-fuchsia-500">BUILT</span>
+              WHAT I&apos;VE <span className="text-fuchsia-500">BUILT</span>
             </h2>
             <p className="font-mono text-gray-500 mb-12">Auto-loaded from GitHub. Click data cards for expanded view.</p>
           </CyberReveal>
@@ -309,10 +292,11 @@ const Projects: React.FC<ProjectsProps> = ({ selectedProject, onSelectProject })
                 <div className="aspect-video bg-gray-900 border border-gray-700 flex items-center justify-center relative group overflow-hidden flex-shrink-0">
                    <div className="absolute inset-0 bg-fuchsia-500/10 group-hover:bg-transparent transition-colors"></div>
                    {selectedProject.image ? (
-                     <img 
+                     <Image 
                        src={selectedProject.image} 
                        alt={selectedProject.title}
-                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                       fill
+                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                      />
                    ) : (
                      <div className="text-gray-700 w-16 h-16 group-hover:text-fuchsia-400 transition-colors">📊</div>
@@ -332,7 +316,7 @@ const Projects: React.FC<ProjectsProps> = ({ selectedProject, onSelectProject })
                    </p>
                    
                    <div className="border-l-2 border-fuchsia-500 pl-4 text-sm text-gray-400 italic">
-                     "{selectedProject.details}"
+                     &quot;{selectedProject.details}&quot;
                    </div>
 
                    <div className="pt-6 flex flex-col gap-3">

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { User } from 'lucide-react';
+import Image from 'next/image';
 
 // --- MOCK UTILS & UI COMPONENTS (Preserved from your code) ---
 
@@ -111,34 +111,33 @@ const NeonButton: React.FC<NeonButtonProps> = ({ children, onClick, color = 'cya
 // --- CYBERPUNK BACKGROUND COMPONENTS (Added back) ---
 
 const CyberGrid = () => (
-  <div className="absolute inset-0 pointer-events-none z-0 opacity-20 transform-gpu perspective-1000">
-    <div className="absolute inset-0 bg-[linear-gradient(to_right,#083344_1px,transparent_1px),linear-gradient(to_bottom,#083344_1px,transparent_1px)] bg-[size:4rem_4rem] [transform:rotateX(60deg)_translateY(-20%)] animate-[grid-move_20s_linear_infinite]"></div>
+  <div className="absolute inset-0 pointer-events-none z-0 opacity-40 transform-gpu perspective-1000">
+    <div className="absolute inset-0 bg-[linear-gradient(to_right,#0ea5e9_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e9_1px,transparent_1px)] bg-[size:4rem_4rem] [transform:rotateX(60deg)_translateY(-20%)] animate-[grid-move_20s_linear_infinite]"></div>
   </div>
 );
 
 const HexColumn = ({ speed, delay, left }: { speed: number; delay: number; left: string }) => {
-  const [chars, setChars] = useState<string[]>([]);
+  const hex = "0123456789ABCDEF";
+  const generateChars = () => Array.from({ length: 20 }, () => hex[Math.floor(Math.random() * hex.length)]);
+  const [chars, setChars] = useState<string[]>(generateChars);
   
   useEffect(() => {
-    const hex = "0123456789ABCDEF";
-    const generate = () => Array.from({ length: 20 }, () => hex[Math.floor(Math.random() * hex.length)]);
-    setChars(generate());
-    const interval = setInterval(() => setChars(generate()), 200); // Change chars constantly
+    const interval = setInterval(() => setChars(generateChars()), 200); // Change chars constantly
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div 
-      className="absolute top-0 text-[10px] font-mono leading-none text-cyan-900/40 select-none writing-vertical-lr animate-rain"
+      className="absolute top-0 text-[12px] font-mono leading-none text-cyan-400/70 select-none writing-vertical-lr animate-rain"
       style={{ 
         left, 
         animationDuration: `${speed}s`, 
         animationDelay: `${delay}s`,
-        textShadow: '0 0 5px rgba(6,182,212,0.5)'
+        textShadow: '0 0 8px rgba(6,182,212,0.8), 0 0 12px rgba(6,182,212,0.5)'
       }}
     >
       {chars.map((char, i) => (
-        <div key={i} className="mb-1 opacity-50 hover:opacity-100 hover:text-cyan-400 transition-opacity">
+        <div key={i} className="mb-1 opacity-80 hover:opacity-100 hover:text-cyan-300 transition-opacity">
           {char}
         </div>
       ))}
@@ -159,7 +158,7 @@ const SystemLogs = () => {
   ];
 
   return (
-    <div className="absolute top-32 right-2 md:right-10 w-40 md:w-64 h-48 md:h-64 overflow-hidden opacity-20 md:opacity-30 pointer-events-none font-mono text-xs text-red-500/80 z-0 block">
+    <div className="absolute top-32 right-2 md:right-10 w-40 md:w-64 h-48 md:h-64 overflow-hidden opacity-40 md:opacity-50 pointer-events-none font-mono text-xs text-red-500/90 z-0 block" style={{ textShadow: '0 0 6px rgba(239, 68, 68, 0.6)' }}>
       <div className="flex flex-col gap-2 animate-[scroll-up_10s_linear_infinite]">
         {[...logs, ...logs, ...logs].map((log, i) => (
           <div key={i} className="whitespace-nowrap text-[10px] md:text-xs">&gt; {log}</div>
@@ -170,7 +169,7 @@ const SystemLogs = () => {
 };
 
 const ScanlineOverlay = () => (
-  <div className="absolute inset-0 pointer-events-none z-[1] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_2px] bg-repeat opacity-20"></div>
+  <div className="absolute inset-0 pointer-events-none z-[1] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_2px] bg-repeat opacity-30"></div>
 );
 
 // --- MAIN HERO COMPONENT ---
@@ -215,12 +214,12 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         <CyberGrid />
       </div>
       {/* 1. Simple Mesh Grid (Mobile) */}
-      <div className="md:hidden absolute inset-0 pointer-events-none z-0 opacity-10">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#083344_1px,transparent_1px),linear-gradient(to_bottom,#083344_1px,transparent_1px)] bg-[size:2rem_2rem]"></div>
+      <div className="md:hidden absolute inset-0 pointer-events-none z-0 opacity-25">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#0ea5e9_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e9_1px,transparent_1px)] bg-[size:2rem_2rem]"></div>
       </div>
 
       {/* 2. Falling Hex Code Rain (Hidden on mobile, shown on desktop) */}
-      <div className="hidden md:block absolute inset-0 z-0 overflow-hidden opacity-30">
+      <div className="hidden md:block absolute inset-0 z-0 overflow-hidden opacity-50">
         <HexColumn speed={8} delay={0} left="5%" />
         <HexColumn speed={12} delay={2} left="15%" />
         <HexColumn speed={6} delay={4} left="25%" />
@@ -304,10 +303,13 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 </div>
 
                 {/* THE NEW AVATAR IMAGE */}
-                <img 
-                  src="/CyberUser.jpeg" 
+                <Image 
+                  src="/Isandith_CyberPunk.png" 
                   alt="Isandith Perera Cyber Avatar" 
-                  className="w-64 h-64 md:w-80 md:h-80 object-cover rounded-full relative z-10 border-4 border-slate-900/50 shadow-[0_0_30px_rgba(6,182,212,0.3)] group-hover:scale-105 transition-transform duration-500" 
+                  width={320}
+                  height={320}
+                  className="w-64 h-64 md:w-80 md:h-80 object-cover object-[center_21%] rounded-full relative z-10 border-4 border-slate-900/50 shadow-[0_0_30px_rgba(6,182,212,0.3)] group-hover:scale-105 transition-transform duration-500"
+                  priority
                 />
                 
                 {/* ID Tag */}

@@ -7,14 +7,15 @@ import { User, Mail, Send, Terminal, Cpu, ShieldCheck } from 'lucide-react';
 const CyberGrid = () => (
   <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-black perspective-1000">
     {/* Grid Floor */}
-    <div className="absolute inset-0 opacity-10 sm:opacity-20 transform rotate-x-60 scale-150 origin-top animate-grid-flow"
+    <div className="absolute inset-0 opacity-25 sm:opacity-35 transform rotate-x-60 scale-150 origin-top animate-grid-flow"
          style={{
            backgroundImage: `
-             linear-gradient(to right, rgba(6,182,212,0.3) 1px, transparent 1px),
-             linear-gradient(to bottom, rgba(6,182,212,0.3) 1px, transparent 1px)
+             linear-gradient(to right, rgba(34,211,238,0.5) 1px, transparent 1px),
+             linear-gradient(to bottom, rgba(34,211,238,0.5) 1px, transparent 1px)
            `,
            backgroundSize: '30px 30px',
-           height: '200%'
+           height: '200%',
+           filter: 'drop-shadow(0 0 5px rgba(6,182,212,0.3))'
          }}
     />
     {/* Horizon Glow */}
@@ -23,18 +24,9 @@ const CyberGrid = () => (
   </div>
 );
 
-// 2. CRT/Scanline Overlay
-const CRTOverlay = () => (
-  <div className="fixed inset-0 pointer-events-none z-50">
-    <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] pointer-events-none" />
-    <div className="absolute inset-0 animate-scanline bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent h-32 opacity-20" />
-  </div>
-);
-
-// 3. Glitch Text Component
+// 2. Glitch Text Component
 const GlitchText = ({ text, color = "cyan" }: { text: string, color?: "cyan" | "fuchsia" }) => {
   const baseColor = color === "cyan" ? "text-cyan-400" : "text-fuchsia-400";
-  const shadowColor = color === "cyan" ? "#22d3ee" : "#d946ef";
   
   return (
     <div className="relative inline-block group">
@@ -47,7 +39,19 @@ const GlitchText = ({ text, color = "cyan" }: { text: string, color?: "cyan" | "
 
 // --- MAIN FORM COMPONENTS ---
 
-const CyberInput = ({ icon: Icon, label, type = "text", placeholder, color = "cyan", name, value, onChange, required = false }: any) => {
+interface CyberInputProps {
+  icon: React.ComponentType<{ className?: string; size?: number }>;
+  label: string;
+  type?: string;
+  placeholder: string;
+  color?: 'cyan' | 'fuchsia';
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  required?: boolean;
+}
+
+const CyberInput = ({ icon: Icon, label, type = "text", placeholder, color = "cyan", name, value, onChange, required = false }: CyberInputProps) => {
   const [focused, setFocused] = useState(false);
   
   const borderColor = focused 
@@ -61,7 +65,7 @@ const CyberInput = ({ icon: Icon, label, type = "text", placeholder, color = "cy
   return (
     <div className="group space-y-2 relative">
       <label className={`text-xs font-mono tracking-widest transition-colors duration-300 ${focused ? `text-${color}-400` : 'text-gray-500'}`}>
-        //{label}_
+        {`//${label}_`}
       </label>
       <div className={`relative bg-black/80 border-2 ${borderColor} transition-all duration-300 ${shadowClass}`}>
         {/* Decorative corner markers */}
@@ -129,13 +133,14 @@ const Contact = () => {
       { threshold: 0.1 }
     );
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
+    const currentRef = containerRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
@@ -254,13 +259,13 @@ const Contact = () => {
           {/* Form Container */}
           <div className="relative group perspective-1000">
             {/* Holographic Border Effect */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-fuchsia-500 to-cyan-500 opacity-20 blur-md group-hover:opacity-40 transition-opacity duration-500 rounded-lg"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-fuchsia-500 to-cyan-500 opacity-30 blur-md group-hover:opacity-50 transition-opacity duration-500 rounded-lg"></div>
             
             <div className="relative bg-black/90 border border-gray-800 p-8 md:p-12 rounded-lg backdrop-blur-sm overflow-hidden">
               
               {/* Decorative Interior Lines */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-fuchsia-500/50 to-transparent"></div>
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400/70 to-transparent" style={{ boxShadow: '0 0 10px rgba(6,182,212,0.5)' }}></div>
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-fuchsia-400/70 to-transparent" style={{ boxShadow: '0 0 10px rgba(217,70,239,0.5)' }}></div>
               
               <div className="grid md:grid-cols-12 gap-12">
                 
@@ -339,7 +344,7 @@ const Contact = () => {
 
                   <div className="pt-4 flex items-center justify-between">
                     <div className="text-xs text-gray-600 font-mono">
-                      // {isSubmitting ? 'TRANSMITTING...' : 'READY_TO_TRANSMIT'}
+                      {`// ${isSubmitting ? 'TRANSMITTING...' : 'READY_TO_TRANSMIT'}`}
                     </div>
 
                     <button 

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: "Isandith Perera Portfolio"
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.svg",
   },
   viewport: {
     width: "device-width",
