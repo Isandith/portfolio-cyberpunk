@@ -93,7 +93,7 @@ const CareerGlow = () => (
 const SystemStatus = () => {
   const statuses = [
     { label: "Career Status", value: "ACTIVE", color: "text-green-500", blinkIndex: 0 },
-    { label: "Current Role", value: "FULL_STACK_INTERN", color: "text-cyan-500", blinkIndex: 1 },
+    { label: "Current Role", value: "ASSOC_SWE", color: "text-cyan-500", blinkIndex: 1 },
     { label: "Experience Level", value: "MID", color: "text-yellow-500", blinkIndex: 2 },
   ];
 
@@ -199,10 +199,19 @@ const Career: React.FC<CareerProps> = ({
       id: 3,
       role: "Software Full Stack Intern",
       company: "Management System Pvt Ltd (MSL)",
-      period: "2025 - Present",
-      description: "Working as a full-stack intern building features for the company's management platform. Responsibilities include implementing React/Next.js frontends, Node.js backends, writing unit/integration tests, and participating in code reviews and CI/CD workflows.",
+      period: "2025 - 2026",
+      description: "Worked as a full-stack intern building features for the company's management platform. Responsibilities included implementing React/Next.js frontends, Node.js backends, writing unit/integration tests, and participating in code reviews and CI/CD workflows.",
       tech: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL", "Docker"],
       type: "contract"
+    },
+    {
+      id: 4,
+      role: "Associate Software Engineer",
+      company: "Ekara Digital Partners",
+      period: "May 2026 - Present",
+      description: "Supporting full-stack development across backend and frontend systems. Contributing to feature development, code reviews, and architecture decisions within a collaborative engineering team.",
+      tech: [".NET", "Next.js", "TypeScript", "React", "SQLServer", "REST APIs"],
+      type: "full-time"
     }
   ]
 }) => {
