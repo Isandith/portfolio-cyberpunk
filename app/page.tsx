@@ -9,7 +9,7 @@ import Freelance from './components/sections/Freelance';
 import Career from './components/sections/Career';
 import Contact from './components/sections/Contact';
 import Footer from './components/sections/Footer';
-import { Code, Layers, Database, PenTool } from 'lucide-react';
+import { Code, Layers, Database, PenTool, Cpu } from 'lucide-react';
 
 // --- TYPES ---
 
@@ -42,22 +42,27 @@ const SKILLS: { [key: string]: SkillGroup } = {
   programming: {
     title: "PROGRAMMING_LANGS",
     icon: <Code className="w-6 h-6" />,
-    items: ["Java", "Python", "Kotlin", "JavaScript", "HTML", "CSS"]
+    items: ["Python", "C#", "Java", "TypeScript", "Kotlin", "Dart", "SQL"]
   },
   frameworks: {
     title: "FRAMEWORKS_LIBS",
     icon: <Layers className="w-6 h-6" />,
-    items: ["SpringBoot", "Angular", "Flutter", "Bootstrap", "Jetpack Compose"]
+    items: [".NET 8", "Spring Boot", "Next.js", "Flask / FastAPI", "Docker", "Angular", "Flutter", "Tailwind CSS"]
   },
   database: {
     title: "DATABASE_TECH",
     icon: <Database className="w-6 h-6" />,
-    items: ["SQL", "MySQL"]
+    items: ["PostgreSQL", "Oracle 11g", "MySQL", "Firebase"]
+  },
+  architecture: {
+    title: "ARCHITECTURE",
+    icon: <Cpu className="w-6 h-6" />,
+    items: ["Microservices", "Kafka (Event-driven)", "SignalR", "JWT Auth", "REST APIs"]
   },
   design: {
     title: "MULTIMEDIA_DESIGN",
     icon: <PenTool className="w-6 h-6" />,
-    items: ["Adobe Photoshop (Pro)", "Adobe Premiere Pro (Pro)", "Adobe After Effects (Pro)", "Figma", "Axure"]
+    items: ["Figma", "Adobe After Effects", "Adobe Premiere Pro", "Adobe Photoshop", "Tailwind CSS"]
   }
 };
 

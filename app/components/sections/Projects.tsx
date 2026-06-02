@@ -237,7 +237,61 @@ const Projects: React.FC<ProjectsProps> = ({ selectedProject, onSelectProject })
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {loading ? (
-              <div className="text-gray-500 font-mono">Loading projects from GitHub...</div>
+              <>
+                <style>{`
+                  @keyframes skel-shimmer {
+                    0% { transform: translateX(-100%); }
+                    100% { transform: translateX(200%); }
+                  }
+                  @keyframes skel-pulse-border {
+                    0%, 100% { border-color: rgba(217,70,239,0.15); box-shadow: none; }
+                    50% { border-color: rgba(217,70,239,0.5); box-shadow: 0 0 18px rgba(217,70,239,0.15); }
+                  }
+                `}</style>
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="border bg-black overflow-hidden"
+                    style={{
+                      animation: `skel-pulse-border 2s ease-in-out ${i * 0.2}s infinite`,
+                      borderColor: 'rgba(217,70,239,0.15)'
+                    }}
+                  >
+                    {/* Image placeholder */}
+                    <div className="h-48 bg-gray-900 relative overflow-hidden">
+                      <div
+                        className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-fuchsia-500/10 to-transparent"
+                        style={{ animation: `skel-shimmer 1.8s linear ${i * 0.15}s infinite` }}
+                      ></div>
+                      {/* Tech tag placeholder */}
+                      <div className="absolute top-2 right-2 w-14 h-5 bg-fuchsia-900/30 border border-fuchsia-500/20"></div>
+                      {/* Corner markers */}
+                      <div className="absolute top-0 left-0 w-3 h-3 border-l-2 border-t-2 border-fuchsia-500/40"></div>
+                      <div className="absolute bottom-0 right-0 w-3 h-3 border-r-2 border-b-2 border-fuchsia-500/40"></div>
+                    </div>
+                    {/* Content placeholder */}
+                    <div className="p-4 space-y-3 bg-black min-h-[180px]">
+                      <div className="h-4 bg-fuchsia-900/25 w-3/4 relative overflow-hidden">
+                        <div className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-fuchsia-400/15 to-transparent" style={{ animation: `skel-shimmer 1.8s linear ${i * 0.15 + 0.3}s infinite` }}></div>
+                      </div>
+                      <div className="h-3 bg-gray-800/80 w-full relative overflow-hidden">
+                        <div className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/5 to-transparent" style={{ animation: `skel-shimmer 1.8s linear ${i * 0.15 + 0.5}s infinite` }}></div>
+                      </div>
+                      <div className="h-3 bg-gray-800/80 w-5/6 relative overflow-hidden">
+                        <div className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/5 to-transparent" style={{ animation: `skel-shimmer 1.8s linear ${i * 0.15 + 0.6}s infinite` }}></div>
+                      </div>
+                      <div className="h-3 bg-gray-800/60 w-2/3 relative overflow-hidden">
+                        <div className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/5 to-transparent" style={{ animation: `skel-shimmer 1.8s linear ${i * 0.15 + 0.7}s infinite` }}></div>
+                      </div>
+                      <div className="pt-3 flex items-center gap-2">
+                        <div className="h-3 bg-fuchsia-900/30 w-24 relative overflow-hidden">
+                          <div className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-fuchsia-400/15 to-transparent" style={{ animation: `skel-shimmer 1.8s linear ${i * 0.15 + 0.9}s infinite` }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </>
             ) : repos.length === 0 ? (
               <div className="text-gray-500 font-mono">No projects found.</div>
             ) : (
